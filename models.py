@@ -1,10 +1,16 @@
 from sqlalchemy.orm import DeclarativeBase,Mapped,mapped_column,relationship
 from sqlalchemy import ForeignKey
-from sqlalchemy import String
+from sqlalchemy import String,Enum as SqlAlchemyEnum
+from enum import Enum
 
 
 class Base(DeclarativeBase):
     pass
+
+
+class Choice_Account(str,Enum):
+    comuns = 'comuns'
+    lojistas = 'lojistas'
 
 
 class User(Base):
@@ -13,6 +19,7 @@ class User(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     nome_completo: Mapped[str] = mapped_column(String(80))
     saldo:Mapped[int] = mapped_column()
+    choice_account:Mapped[Choice_Account] = mapped_column(SqlAlchemyEnum(Choice_Account))
     cpf:Mapped[int] = mapped_column(unique=True)
     email: Mapped[str] = mapped_column(String(180),unique=True)
     senha: Mapped[str] = mapped_column(String(15))
@@ -35,4 +42,5 @@ class Trasferencia(Base):
     #ACESSAR OBJECTOS
     pagador: Mapped["User"] = relationship(foreign_keys=[pagador_id])
     beneficiario: Mapped["User"] = relationship(foreign_keys=[beneficiario_id])
+
 
