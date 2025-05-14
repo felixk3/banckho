@@ -25,3 +25,6 @@ class Referencia_Trasferencia(BaseModel):
     cpf_pagador:int
     cpf_beneficiario:int
 
+class Token(BaseModel):
+    access_token: str
+    token_type: str
